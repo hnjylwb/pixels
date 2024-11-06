@@ -64,6 +64,7 @@ public class QueryScheduleQueues
 
     public ExecutorType Enqueue(long transId)
     {
+        // TODO(wenbo): resource-aware
         if (this.mppQueue.offer(transId))
         {
             return ExecutorType.MPP;
