@@ -6,7 +6,9 @@ package io.pixelsdb.pixels.server.constant;
  */
 public class ControllerParameters
 {
-    public final static int QUERY_RESULT_CLEAR_INTERVAL_MS = 300000;
-    public final static int QUERY_RESULT_CLEAR_DELAY_MS = 60000;
+    // public final static int QUERY_RESULT_CLEAR_INTERVAL_MS = 300000;
+    // public final static int QUERY_RESULT_CLEAR_DELAY_MS = 60000;
+    public final static int QUERY_RESULT_CLEAR_INTERVAL_MS = 86400000; // A day
+    public final static int QUERY_RESULT_CLEAR_DELAY_MS = 3600000; // An hour
     public final static int GET_QUERY_COSTS_DELAY_MS = 500;
 }

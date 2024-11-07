@@ -314,6 +314,18 @@ public class QueryManager
                 return new SubmitQueryResponse(ErrorCode.QUERY_SERVER_EXECUTE_FAILED, e.getMessage(), null);
             }
         }
+        else if (request.getExecutionHint() == ExecutionHint.MPP)
+        {
+            try
+            {
+                String traceToken = UUID.randomUUID().toString();
+                this.submit(new ReceivedQuery(traceToken, request, System.currentTimeMillis()));
+                return new SubmitQueryResponse(ErrorCode.SUCCESS, "", traceToken);
+            } catch (Throwable e)
+            {
+                return new SubmitQueryResponse(ErrorCode.QUERY_SERVER_EXECUTE_FAILED, e.getMessage(), null);
+            }
+        }
         else
         {
             return new SubmitQueryResponse(ErrorCode.QUERY_SERVER_EXECUTE_FAILED,
@@ -329,7 +341,9 @@ public class QueryManager
     {
         Properties properties;
         SubmitQueryRequest request = query.getRequest();
-        if (request.getExecutionHint() == ExecutionHint.RELAXED || request.getExecutionHint() == ExecutionHint.BEST_OF_EFFORT)
+        if (request.getExecutionHint() == ExecutionHint.RELAXED ||
+            request.getExecutionHint() == ExecutionHint.BEST_OF_EFFORT ||
+            request.getExecutionHint() == ExecutionHint.MPP)
         {
             // submit it to the mpp connection
             properties = new Properties(this.costEffectiveConnProp);

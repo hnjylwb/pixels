@@ -28,4 +28,5 @@ public enum ExecutionHint
     BEST_OF_EFFORT, // execute the query at best of effort, without any guarantee of timeliness or performance
     RELAXED, // the query can be postponed a few minutes for execution
     IMMEDIATE, // execute the query immediately using Pixel-Turbo
+    MPP, // execute the query immediately using Trino
 }

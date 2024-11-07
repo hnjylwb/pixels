@@ -40,6 +40,8 @@ public class PriceModel
         {
             case IMMEDIATE:
                 return scanSize / 1024 / 1024 / 2048;
+            case MPP:
+                return scanSize / 1024 / 1024 / 2048;
             case RELAXED:
                 return scanSize / 1024 / 1024 / 10240;
             case BEST_OF_EFFORT:
