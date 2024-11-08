@@ -411,6 +411,14 @@ public abstract class PartitionedJoinOperator extends SingleStageJoinOperator
             return super.getLayerOutputCostMs();
         }
 
+        @Override
+        public double[] getDurations()
+        {
+            // TODO(wenbo): implement
+            double[] durations = new double[0];
+            return durations;
+        }
+
         public long getSmallPartitionInputCostMs()
         {
             long inputCostMs = 0;

@@ -240,5 +240,15 @@ public abstract class ScanOperator extends Operator
             }
             return outputCostMs;
         }
+
+        @Override
+        public double[] getDurations()
+        {
+            double[] durations = new double[scanOutputs.length];
+            for (int i = 0; i < scanOutputs.length; i++) {
+                durations[i] = scanOutputs[i].getDurationMs();
+            }
+            return durations;
+        }
     }
 }

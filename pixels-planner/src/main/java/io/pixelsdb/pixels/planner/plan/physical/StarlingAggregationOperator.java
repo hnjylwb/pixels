@@ -438,6 +438,14 @@ public class StarlingAggregationOperator extends Operator
             return outputCostMs;
         }
 
+        @Override
+        public double[] getDurations()
+        {
+            // TODO(wenbo): implement
+            double[] durations = new double[0];
+            return durations;
+        }
+
         public long getPartitionInputCostMs()
         {
             long inputCostMs = 0;

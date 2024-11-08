@@ -283,6 +283,14 @@ public abstract class SingleStageJoinOperator extends JoinOperator
             return outputCostMs;
         }
 
+        @Override
+        public double[] getDurations()
+        {
+            // TODO(wenbo): implement
+            double[] durations = new double[0];
+            return durations;
+        }
+
         public Output[] getJoinOutputs()
         {
             return joinOutputs;

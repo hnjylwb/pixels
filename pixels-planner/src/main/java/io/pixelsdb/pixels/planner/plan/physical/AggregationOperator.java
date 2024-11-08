@@ -395,6 +395,14 @@ public abstract class AggregationOperator extends Operator
             return outputCostMs;
         }
 
+        @Override
+        public double[] getDurations()
+        {
+            // TODO(wenbo): implement
+            double[] durations = new double[0];
+            return durations;
+        }
+
         public long getScanInputCostMs()
         {
             long inputCostMs = 0;

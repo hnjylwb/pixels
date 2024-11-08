@@ -78,6 +78,8 @@ public interface OperatorExecutor
         long getLayerComputeCostMs();
 
         long getLayerOutputCostMs();
+
+        double[] getDurations();
     }
 
     static void waitForCompletion(CompletableFuture<? extends Output>[] stageOutputs) throws InterruptedException
