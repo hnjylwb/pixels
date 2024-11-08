@@ -480,6 +480,13 @@ public class QueryManager
                         throw new TransException("the trans context returned by transaction service has an invalid cf cost");
                     }
                     response.addCostCents(cfCostCents);
+                    String[] durations_string = transContext.getProperties().getProperty(Constants.TRANS_CONTEXT_CF_COST_DURATIONS_KEY, "0").split(",");
+                    double[] durations = new double[durations_string.length];
+                    for (int i = 0; i < durations_string.length; i++)
+                    {
+                        durations[i] = Double.parseDouble(durations_string[i]);
+                    }
+                    response.setDurations(durations);
                     double scanBytes = Double.parseDouble(transContext.getProperties().getProperty(
                             Constants.TRANS_CONTEXT_SCAN_BYTES_KEY));
                     if (scanBytes < 0)

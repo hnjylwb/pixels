@@ -127,6 +127,7 @@ message UpdateQueryCostsRequest {
         double vmCostCents = 4;
         double cfCostCents = 5;
     }
+    repeated double durations = 6;
 }
 
 message UpdateQueryCostsResponse {

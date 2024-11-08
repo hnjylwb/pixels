@@ -31,6 +31,7 @@ import io.pixelsdb.pixels.daemon.TransServiceGrpc;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -260,7 +261,8 @@ public class TransService
         else if (costCents.getType() == QueryCostType.CFCOST)
         {
             request = TransProto.UpdateQueryCostsRequest.newBuilder()
-                    .setTransId(transId).setScanBytes(scanBytes).setCfCostCents(costCents.getCostCents()).build();
+                    .setTransId(transId).setScanBytes(scanBytes).setCfCostCents(costCents.getCostCents())
+                    .addAllDurations(Arrays.stream(costCents.getDurations()).boxed().toList()).build();
         }
         assert(request != null);
         return updateQueryCosts(request);
@@ -285,7 +287,8 @@ public class TransService
         else if (costCents.getType() == QueryCostType.CFCOST)
         {
             request = TransProto.UpdateQueryCostsRequest.newBuilder()
-                    .setExternalTraceId(externalTraceId).setScanBytes(scanBytes).setCfCostCents(costCents.getCostCents()).build();
+                    .setExternalTraceId(externalTraceId).setScanBytes(scanBytes).setCfCostCents(costCents.getCostCents())
+                    .addAllDurations(Arrays.stream(costCents.getDurations()).boxed().toList()).build();
         }
         assert(request != null);
         return updateQueryCosts(request);

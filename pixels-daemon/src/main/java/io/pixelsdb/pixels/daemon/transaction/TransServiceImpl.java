@@ -19,6 +19,17 @@
  */
 package io.pixelsdb.pixels.daemon.transaction;
 
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import io.etcd.jetcd.KeyValue;
 import io.grpc.stub.StreamObserver;
 import io.pixelsdb.pixels.common.error.ErrorCode;
@@ -30,14 +41,6 @@ import io.pixelsdb.pixels.common.utils.Constants;
 import io.pixelsdb.pixels.common.utils.EtcdUtil;
 import io.pixelsdb.pixels.daemon.TransProto;
 import io.pixelsdb.pixels.daemon.TransServiceGrpc;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.nio.charset.StandardCharsets;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @create 2022-02-20
@@ -315,6 +318,10 @@ public class TransServiceImpl extends TransServiceGrpc.TransServiceImplBase
             {
                 context.getProperties().setProperty(Constants.TRANS_CONTEXT_CF_COST_CENTS_KEY,
                         String.valueOf(request.getCfCostCents()));
+                List<Double> durations = request.getDurationsList();
+                String durations_result = durations.stream().map(String::valueOf).collect(Collectors.joining(","));
+                context.getProperties().setProperty(Constants.TRANS_CONTEXT_CF_COST_DURATIONS_KEY,
+                        durations_result);
             }
             builder.setErrorCode(ErrorCode.SUCCESS);
         }

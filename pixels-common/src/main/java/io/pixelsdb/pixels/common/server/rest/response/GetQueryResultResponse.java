@@ -58,7 +58,9 @@ public class GetQueryResultResponse
     /**
      * The execution hint of query.
      */
-    private ExecutionHint executionHint;
+    private ExecutionHint executionHint = ExecutionHint.MPP;
+
+    private double[] durations;
 
     /**
      * Default constructor for Jackson.
@@ -200,6 +202,16 @@ public class GetQueryResultResponse
     public void setBilledCents(double billedCents)
     {
         this.billedCents = billedCents;
+    }
+
+    public double[] getDurations()
+    {
+        return durations;
+    }
+
+    public void setDurations(double[] durations)
+    {
+        this.durations = durations;
     }
 
     /**

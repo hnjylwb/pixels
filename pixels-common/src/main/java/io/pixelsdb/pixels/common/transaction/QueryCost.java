@@ -23,6 +23,7 @@ public class QueryCost
 {
     private QueryCostType type;
     private double costCents;
+    private double[] durations;
 
     public QueryCost(QueryCostType type, double costCents)
     {
@@ -30,12 +31,23 @@ public class QueryCost
         this.costCents = costCents;
     }
 
+    public QueryCost(QueryCostType type, double costCents, double[] durations)
+    {
+        this.type = type;
+        this.costCents = costCents;
+        this.durations = durations;
+    }
+
     void setCostCents(double cost)  { this.costCents = cost; }
 
     void setType(QueryCostType type) { this.type = type; }
 
+    void setDurations(double[] durations)  { this.durations = durations; }
+
     public double getCostCents() { return costCents; }
 
     public QueryCostType getType() { return type; }
+
+    public double[] getDurations() { return durations; }
 
 }
