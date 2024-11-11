@@ -484,6 +484,11 @@ public class QueryManager
                     double[] durations = new double[durations_string.length];
                     for (int i = 0; i < durations_string.length; i++)
                     {
+                        if (durations_string[i].isEmpty())
+                        {
+                            durations[i] = -1;
+                            continue;
+                        }
                         durations[i] = Double.parseDouble(durations_string[i]);
                     }
                     response.setDurations(durations);
