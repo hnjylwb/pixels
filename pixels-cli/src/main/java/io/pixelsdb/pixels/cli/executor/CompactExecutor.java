@@ -162,8 +162,7 @@ public class CompactExecutor implements CommandExecutor
                     .setPath(targetFilePath)
                     .setBlockSize(blockSize)
                     .setReplication(replication)
-                    .setBlockPadding(false)
-                    .setHasHiddenColumn(true);
+                    .setBlockPadding(false);
 
             long threadStart = System.currentTimeMillis();
             compactExecutor.execute(() -> {

@@ -51,13 +51,13 @@ public class AggregationInput extends Input
      */
     public AggregationInput()
     {
-        super(-1, -1);
+        super(-1);
     }
 
-    public AggregationInput(long transId, long timestamp, AggregatedTableInfo aggregatedTableInfo,
+    public AggregationInput(long transId, AggregatedTableInfo aggregatedTableInfo,
                             AggregationInfo aggregationInfo, OutputInfo output)
     {
-        super(transId, timestamp);
+        super(transId);
         this.aggregatedTableInfo = aggregatedTableInfo;
         this.aggregationInfo = aggregationInfo;
         this.output = output;

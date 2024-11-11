@@ -75,7 +75,6 @@ public class StarlingPlanner
     private final boolean compactPathEnabled;
     private final Storage storage;
     private final long transId;
-    private final long timestamp;
 
     /**
      * The data size in bytes to be scanned by the input query.
@@ -114,11 +113,10 @@ public class StarlingPlanner
      * @param metadataService the metadata service to access Pixels metadata
      * @throws IOException
      */
-    public StarlingPlanner(long transId, long timestamp, Table rootTable, boolean orderedPathEnabled,
-                           boolean compactPathEnabled, Optional<MetadataService> metadataService) throws IOException
+    public StarlingPlanner(long transId, Table rootTable, boolean orderedPathEnabled, boolean compactPathEnabled,
+                           Optional<MetadataService> metadataService) throws IOException
     {
         this.transId = transId;
-        this.timestamp = timestamp;
         this.rootTable = requireNonNull(rootTable, "rootTable is null");
         checkArgument(rootTable.getTableType() == Table.TableType.BASE ||
                         rootTable.getTableType() == Table.TableType.JOINED ||
@@ -178,7 +176,6 @@ public class StarlingPlanner
         {
             ScanInput scanInput = new ScanInput();
             scanInput.setTransId(transId);
-            scanInput.setTimestamp(timestamp);
             ScanTableInfo tableInfo = new ScanTableInfo();
             ImmutableList.Builder<InputSplit> inputsBuilder = ImmutableList
                     .builderWithExpectedSize(IntraWorkerParallelism);
@@ -244,7 +241,6 @@ public class StarlingPlanner
             {
                 PartitionInput partitionInput = new PartitionInput();
                 partitionInput.setTransId(transId);
-                partitionInput.setTimestamp(timestamp);
                 ScanTableInfo tableInfo = new ScanTableInfo();
                 ImmutableList.Builder<InputSplit> inputsBuilder = ImmutableList
                         .builderWithExpectedSize(IntraWorkerParallelism);
@@ -297,7 +293,6 @@ public class StarlingPlanner
         {
             AggregationInput finalAggrInput = new AggregationInput();
             finalAggrInput.setTransId(transId);
-            finalAggrInput.setTimestamp(timestamp);
             AggregatedTableInfo aggregatedTableInfo = new AggregatedTableInfo();
             aggregatedTableInfo.setTableName(aggregatedTable.getTableName());
             aggregatedTableInfo.setBase(false);
@@ -402,7 +397,7 @@ public class StarlingPlanner
                         joinedTable.getTableName() + "/";
                 MultiOutputInfo output = new MultiOutputInfo(path, IntermediateStorageInfo, true, outputs);
 
-                BroadcastJoinInput joinInput = new BroadcastJoinInput(transId, timestamp, leftTableInfo, rightTableInfo,
+                BroadcastJoinInput joinInput = new BroadcastJoinInput(transId, leftTableInfo, rightTableInfo,
                         joinInfo, false, null, output);
                 joinInputs.add(joinInput);
             }
@@ -615,7 +610,7 @@ public class StarlingPlanner
                     MultiOutputInfo output = new MultiOutputInfo(path, IntermediateStorageInfo, true, outputs);
 
                     BroadcastJoinInput joinInput = new BroadcastJoinInput(
-                            transId, timestamp, leftTableInfo, rightTableInfo, joinInfo,
+                            transId, leftTableInfo, rightTableInfo, joinInfo,
                             false, null, output);
 
                     joinInputs.add(joinInput);
@@ -663,7 +658,7 @@ public class StarlingPlanner
                     MultiOutputInfo output = new MultiOutputInfo(path, IntermediateStorageInfo, true, outputs);
 
                     BroadcastJoinInput joinInput = new BroadcastJoinInput(
-                            transId, timestamp, rightTableInfo, leftTableInfo, joinInfo,
+                            transId, rightTableInfo, leftTableInfo, joinInfo,
                             false, null, output);
 
                     joinInputs.add(joinInput);
@@ -1023,7 +1018,6 @@ public class StarlingPlanner
         {
             PartitionInput partitionInput = new PartitionInput();
             partitionInput.setTransId(transId);
-            partitionInput.setTimestamp(timestamp);
             ScanTableInfo tableInfo = new ScanTableInfo();
             ImmutableList.Builder<InputSplit> inputsBuilder = ImmutableList
                     .builderWithExpectedSize(IntraWorkerParallelism);
@@ -1127,7 +1121,7 @@ public class StarlingPlanner
                 PartitionedJoinInfo joinInfo = new PartitionedJoinInfo(joinedTable.getJoin().getJoinType(),
                         joinedTable.getJoin().getLeftColumnAlias(), joinedTable.getJoin().getRightColumnAlias(),
                         leftProjection, rightProjection, postPartition, postPartitionInfo, numPartition, ImmutableList.of(i));
-                 joinInput = new PartitionedJoinInput(transId, timestamp, leftTableInfo, rightTableInfo, joinInfo,
+                 joinInput = new PartitionedJoinInput(transId, leftTableInfo, rightTableInfo, joinInfo,
                          false, null, output);
             }
             else
@@ -1135,7 +1129,7 @@ public class StarlingPlanner
                 PartitionedJoinInfo joinInfo = new PartitionedJoinInfo(joinedTable.getJoin().getJoinType().flip(),
                         joinedTable.getJoin().getRightColumnAlias(), joinedTable.getJoin().getLeftColumnAlias(),
                         rightProjection, leftProjection, postPartition, postPartitionInfo, numPartition, ImmutableList.of(i));
-                joinInput = new PartitionedJoinInput(transId, timestamp, rightTableInfo, leftTableInfo, joinInfo,
+                joinInput = new PartitionedJoinInput(transId, rightTableInfo, leftTableInfo, joinInfo,
                         false, null, output);
             }
 

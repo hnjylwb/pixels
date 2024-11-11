@@ -56,13 +56,13 @@ public abstract class JoinInput extends Input
      */
     public JoinInput()
     {
-        super(-1, -1);
+        super(-1);
     }
 
-    public JoinInput(long transId, long timestamp, boolean partialAggregationPresent,
+    public JoinInput(long transId, boolean partialAggregationPresent,
                      PartialAggregationInfo partialAggregationInfo, MultiOutputInfo output)
     {
-        super(transId, timestamp);
+        super(transId);
         this.partialAggregationPresent = partialAggregationPresent;
         this.partialAggregationInfo = partialAggregationInfo;
         this.output = output;

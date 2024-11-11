@@ -44,8 +44,6 @@ public class Parameters
     private final EncodingLevel encodingLevel;
     private final boolean nullsPadding;
     private final MetadataService metadataService;
-    private final long transId;
-    private final long timestamp;
 
     public List<Path> getLoadingPaths()
     {
@@ -82,12 +80,8 @@ public class Parameters
         return nullsPadding;
     }
 
-    public long getTransId() { return transId; }
-
-    public long getTimestamp() { return timestamp; }
-
-    public Parameters(String dbName, String tableName, int maxRowNum, String regex, EncodingLevel encodingLevel,
-                      boolean nullsPadding, MetadataService metadataService, long transId, long timestamp)
+    public Parameters(String dbName, String tableName, int maxRowNum, String regex,
+                      EncodingLevel encodingLevel, boolean nullsPadding, MetadataService metadataService)
     {
         this.dbName = dbName;
         this.tableName = tableName;
@@ -97,8 +91,6 @@ public class Parameters
         this.encodingLevel = encodingLevel;
         this.nullsPadding = nullsPadding;
         this.metadataService = metadataService;
-        this.transId = transId;
-        this.timestamp = timestamp;
     }
 
     /**

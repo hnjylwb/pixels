@@ -68,13 +68,12 @@ public class PartitionedChainJoinInput extends JoinInput
      */
     public PartitionedChainJoinInput() { }
 
-    public PartitionedChainJoinInput(long transId, long timestamp, List<BroadcastTableInfo> chainTables,
-                                     List<ChainJoinInfo> chainJoinInfos, PartitionedTableInfo smallTable,
-                                     PartitionedTableInfo largeTable, PartitionedJoinInfo joinInfo,
-                                     boolean partialAggregationPresent, PartialAggregationInfo partialAggregationInfo,
-                                     MultiOutputInfo output)
+    public PartitionedChainJoinInput(long transId, List<BroadcastTableInfo> chainTables, List<ChainJoinInfo> chainJoinInfos,
+                                     PartitionedTableInfo smallTable, PartitionedTableInfo largeTable,
+                                     PartitionedJoinInfo joinInfo, boolean partialAggregationPresent,
+                                     PartialAggregationInfo partialAggregationInfo, MultiOutputInfo output)
     {
-        super(transId, timestamp, partialAggregationPresent, partialAggregationInfo, output);
+        super(transId, partialAggregationPresent, partialAggregationInfo, output);
         this.chainTables = chainTables;
         this.chainJoinInfos = chainJoinInfos;
         this.smallTable = smallTable;
@@ -144,8 +143,8 @@ public class PartitionedChainJoinInput extends JoinInput
         private Builder(PartitionedChainJoinInput instance)
         {
             this.builderInstance = new PartitionedChainJoinInput(
-                    instance.getTransId(), instance.getTimestamp(), instance.chainTables, instance.chainJoinInfos,
-                    instance.smallTable, instance.largeTable, instance.joinInfo, instance.isPartialAggregationPresent(),
+                    instance.getTransId(), instance.chainTables, instance.chainJoinInfos, instance.smallTable,
+                    instance.largeTable, instance.joinInfo, instance.isPartialAggregationPresent(),
                     instance.getPartialAggregationInfo(), instance.getOutput());
         }
 
